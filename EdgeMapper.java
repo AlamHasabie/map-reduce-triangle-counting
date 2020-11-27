@@ -1,13 +1,12 @@
 import java.io.IOException;
 
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 
-public class LengthTwoMapper
+public class EdgeMapper
     extends Mapper<Object, Text, LongWritable, LongWritable>
 {
     private LongWritable node1 = new LongWritable();

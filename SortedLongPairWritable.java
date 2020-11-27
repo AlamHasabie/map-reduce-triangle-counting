@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.io.DataInput;
+import java.io.IOException;
+
 import org.apache.hadoop.io.LongWritable;
 
 /** ascending sorted pair */
@@ -9,17 +13,39 @@ public class SortedLongPairWritable
 	public SortedLongPairWritable(LongWritable first, LongWritable second)
 	{
 		super(first, second);
-		order();
+		sort();
 	}
 
 	@Override
 	public void set(Long l, Long r)
 	{
-		super.set(l, r);
-		order();
+		left.set(l);
+		right.set(r);
+		sort();
 	}
 
-	private void order()
+	@Override
+	public void setLeft(Long l)
+	{
+		super.setLeft(l);
+		sort();
+	}
+
+	@Override
+	public void setRight(Long r)
+	{
+		super.setRight(r);
+		sort();
+	}
+
+	@Override
+	public void readFields(DataInput in) throws IOException
+	{
+		super.readFields(in);
+		sort();
+	}
+
+	private void sort()
 	{
 		if(left.compareTo(right) == 1)
 		{
