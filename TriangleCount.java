@@ -30,7 +30,7 @@ public class TriangleCount
         job.setOutputValueClass(SortedLongPairWritable.class);
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, firstReduceTemp);
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
         Job job2 = Job.getInstance(new Configuration(), "Triangle Count - Phase 2");
 
@@ -44,8 +44,8 @@ public class TriangleCount
         job2.setOutputKeyClass(LongWritable.class);
         job2.setOutputValueClass(LongWritable.class);
 
-        FileInputFormat.addInputPath(job2, firstReduceTemp);
-        FileOutputFormat.setOutputPath(job2, secondReduceTemp);
+        FileInputFormat.addInputPath(job2, new Path(args[1]));
+        FileOutputFormat.setOutputPath(job2, new Path(args[2]));
 
         Job job3 = new Job(new Configuration(), "Triangle Count - Summarizer");
         job3.setNumReduceTasks(1);
@@ -62,8 +62,8 @@ public class TriangleCount
         job3.setOutputKeyClass(Text.class);
         job3.setOutputValueClass(LongWritable.class);
 
-        FileInputFormat.addInputPath(job3, secondReduceTemp);
-        FileOutputFormat.setOutputPath(job3, new Path("/tmp/hadoop/output/3"));
+        FileInputFormat.addInputPath(job3, new Path(args[2]));
+        FileOutputFormat.setOutputPath(job3, new Path(args[3]));
 
         pipelineRunning = job.waitForCompletion(true);
 
