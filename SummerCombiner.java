@@ -9,7 +9,7 @@ public class SummerCombiner
     	public void reduce(LongWritable k, Iterable<LongWritable> values, Context context)
     		throws IOException, InterruptedException 
         {
-        	Long sum = new Long(0);
+        	long sum = 0;
         	for (LongWritable v : values)
         	{
         		sum += v.get();

@@ -7,7 +7,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class SummerReducer
 	extends Reducer<LongWritable,LongWritable,Text,LongWritable>
 {
-	private static Long sum = new Long(0);
+	private static long sum = 0;
 	public void reduce(LongWritable k, Iterable<LongWritable> values, Context context)
 		throws IOException, InterruptedException
 	{
