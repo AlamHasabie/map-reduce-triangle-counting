@@ -4,7 +4,8 @@ Closed triplets counting with map-reduce
 ## How to run
 1. Compile : bin/hadoop com.sun.tools.javac.Main \[PATH_TO_DIR\]/*.java
 
-For each phase, run
+For each phase, run :
+
 2. Build .jar : jar cf \[JARNAME\].jar \[PHASE_MAIN_CLASS\] *.class
 3. Run : bin/hadoop jar \[JARNAME\].jar TriangleCount \[PATH_TO_DIR\]/data/sample
 
