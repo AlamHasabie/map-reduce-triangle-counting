@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.io.IOException;
 
 import org.apache.hadoop.io.LongWritable;
@@ -10,12 +10,12 @@ public class ClosingEdgeReducer
 {
     private static final LongWritable one = new LongWritable(1);
     private static LongWritable temp = new LongWritable();
-    private ArrayList<Long> tempArray;
+    private Set<Long> set;
 
     private void flush(Context context)
         throws IOException, InterruptedException
     {
-        for(Long l : tempArray)
+        for(Long l : set)
         {
             temp.set(l);
             context.write(temp, one);
@@ -24,7 +24,7 @@ public class ClosingEdgeReducer
     public void reduce(SortedLongPairWritable v, Iterable<LongWritable> values, Context context)
         throws IOException, InterruptedException 
     {
-        tempArray = new ArrayList<>();
+        set = new HashSet<>();
         boolean isFlagFound = false;
         Long content;
 
@@ -39,12 +39,14 @@ public class ClosingEdgeReducer
 
             if((content!=-1)&&isFlagFound)
             {
-                temp.set(content);
-                context.write(temp, one);
-
+                if(set.add(content))
+                {
+                    temp.set(content);
+                    context.write(temp, one);
+                }
             } else 
             {
-                tempArray.add(content);
+                set.add(content);
             }
         }
 
